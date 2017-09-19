@@ -1,9 +1,9 @@
 // CommonJS modules on the server side - require()
-const express = require("express");
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const express = require('express');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-require("dotenv").config();
+require('dotenv').config();
 
 const app = express();
 
@@ -13,12 +13,21 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/auth/google/callback"
+      callbackURL: '/auth/google/callback' // Send them back to this route
     },
     accessToken => {
       console.log(accessToken);
     }
   )
+);
+
+app.get(
+  '/auth/google',
+  // Use 'Google' strategy
+  passport.authenticate('google', {
+    // Specifies to Google what scopes to give access to
+    scope: ['profile', 'email']
+  })
 );
 
 // Dynamic port binding
