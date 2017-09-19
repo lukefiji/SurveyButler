@@ -1,13 +1,13 @@
 // CommonJS modules on the server side - require()
-const express = require('express');
+const express = require("express");
 const app = express();
 
 // Route handler
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.send({
-    hello: 'world'
-  })
-})
+    it: "works!"
+  });
+});
 
 // Dynamic port binding
 const PORT = process.env.PORT || 5000;
