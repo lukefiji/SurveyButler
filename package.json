@@ -1,5 +1,5 @@
 {
-  "name": "SurveyButler",
+  "name": "surveybutler",
   "version": "1.0.0",
   "description": "SurveyButler",
   "main": "index.js",
@@ -10,12 +10,16 @@
     "npm": "5.0.3"
   },
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "dependencies": {
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
