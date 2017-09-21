@@ -5,6 +5,21 @@ const mongoose = require('mongoose');
 // User is model class
 const User = mongoose.model('users');
 
+// Serialize user for setting cookie
+// User is instance returned from DB
+passport.serializeUser((user, done) => {
+  // Serialze User instance's ._id to allow usage of other auth methods
+  done(null, user.id);
+});
+
+// Convert id from cookie into a Mongo instance
+passport.deserializeUser((id, done) => {
+  // Find by Mongo id
+  User.findById(id).then(user => {
+    done(null, user);
+  });
+});
+
 // Configuring Passport strategies
 passport.use(
   new GoogleStrategy(
@@ -22,13 +37,18 @@ passport.use(
         .then(existingUser => {
           if (existingUser) {
             // We already have a record with the given profile ID
+            // done(err, doneValue)
+            done(null, existingUser);
           } else {
             /** 
             * If a record doesn't exist, create
             * new record/model instance of user.
             * save() saves it to the database
             */
-            new User({ googleId: profile.id }).save();
+            new User({ googleId: profile.id })
+              .save()
+              // Receive back saved instance from db
+              .then(user => done(null, user));
           }
         });
 
