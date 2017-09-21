@@ -9,13 +9,15 @@ const User = mongoose.model('users');
 // User is instance returned from DB
 passport.serializeUser((user, done) => {
   // Serialze User instance's ._id to allow usage of other auth methods
+  // Automatically encrypts user data, return serialized cookie
   done(null, user.id);
 });
 
 // Convert id from cookie into a Mongo instance
 passport.deserializeUser((id, done) => {
-  // Find by Mongo id
+  // Find by Mongo _id
   User.findById(id).then(user => {
+    // Return deserialized user object
     done(null, user);
   });
 });
@@ -56,3 +58,5 @@ passport.use(
     }
   )
 );
+
+// TODO: Set up Facebook strategy

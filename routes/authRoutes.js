@@ -14,4 +14,16 @@ module.exports = app => {
 
   // Sees that URL has auth code, and exchanges it with user profile & email
   app.get('/auth/google/callback', passport.authenticate('google'));
+
+  app.get('/api/logout', (req, res) => {
+    // logout() is attatched automatically to request by passport
+    req.logout();
+    res.send(req.user);
+  });
+
+  // Test authentication
+  app.get('/api/current-user', (req, res) => {
+    // Sends back deserialized cookie of the current user
+    res.send(req.user);
+  });
 };

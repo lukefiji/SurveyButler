@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 
 const app = express();
 
-// Configure cookie-session
+// Configure cookie-session middleware
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-// Use passport and enable sessions
+// Tell passport to use cookies to manage authentication
 app.use(passport.initialize());
 app.use(passport.session());
 
