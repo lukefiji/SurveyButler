@@ -29,7 +29,9 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       // Send them back to this route
-      callbackURL: '/auth/google/callback'
+      callbackURL: '/auth/google/callback',
+      // Trusts any proxies - because Heroku's proxy uses http://
+      proxy: true
     },
     // User has come back to our server and exchanged code for profile
     (accessToken, refreshToken, profile, done) => {
