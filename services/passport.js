@@ -34,29 +34,23 @@ passport.use(
       proxy: true
     },
     // User has come back to our server and exchanged code for profile
-    (accessToken, refreshToken, profile, done) => {
-      // Check if user already exists
-      User.findOne({ googleId: profile.id })
-        // Database queries return promises
-        .then(existingUser => {
-          if (existingUser) {
-            // We already have a record with the given profile ID
-            // done(err, doneValue)
-            done(null, existingUser);
-          } else {
-            /** 
-            * If a record doesn't exist, create
-            * new record/model instance of user.
-            * save() saves it to the database
-            */
-            new User({ googleId: profile.id })
-              .save()
-              // Receive back saved instance from db
-              .then(user => done(null, user));
-          }
-        });
+    async (accessToken, refreshToken, profile, done) => {
+      // Check if user already exists - database queries return promises
+      const existingUser = await User.findOne({ googleId: profile.id });
 
-      console.log(profile.id);
+      if (existingUser) {
+        // We already have a record with the given profile ID
+        // done(err, doneValue)
+        return done(null, existingUser);
+      }
+
+      /** 
+      * If a record doesn't exist, create new record/model instance of user.
+      * save() saves it to the database
+      */
+      const user = await new User({ googleId: profile.id }).save();
+      // Receive back saved instance from db
+      done(null, user);
     }
   )
 );
