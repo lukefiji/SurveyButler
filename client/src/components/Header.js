@@ -5,18 +5,20 @@ class Header extends Component {
     return (
       <nav>
         <div className="nav-wrapper">
-          <a
-            href="#"
-            className="left brand-logo"
-            style={{ marginLeft: '0.5em' }}
-          >
-            Logo
-          </a>
-          <ul className="right">
-            <li>
-              <a>Login With Google</a>
-            </li>
-          </ul>
+          <div className="container">
+            <a
+              href="#"
+              className="left brand-logo"
+              style={{ marginLeft: '0.5em' }}
+            >
+              SurveyButler
+            </a>
+            <ul className="right">
+              <li>
+                <a>Login With Google</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </nav>
     );
