@@ -12,8 +12,15 @@ module.exports = app => {
     })
   );
 
-  // Sees that URL has auth code, and exchanges it with user profile & email
-  app.get('/auth/google/callback', passport.authenticate('google'));
+  app.get(
+    '/auth/google/callback',
+    // Middleware sees that URL has auth code,
+    // exchanges it with user profile & email
+    passport.authenticate('google'),
+    (req, res) => {
+      res.redirect('/surveys');
+    }
+  );
 
   app.get('/api/logout', (req, res) => {
     // logout() is attatched automatically to request by passport
