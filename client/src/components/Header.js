@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
-  renderContent() {
+  renderNav() {
     // Set up auth cases
     switch (this.props.auth) {
       case null:
@@ -16,7 +17,7 @@ class Header extends Component {
       default:
         return (
           <li>
-            <a>Logout</a>
+            <a href="/api/logout">Logout</a>
           </li>
         );
     }
@@ -27,14 +28,14 @@ class Header extends Component {
       <nav>
         <div className="nav-wrapper">
           <div className="container">
-            <a className="left brand-logo" style={{ marginLeft: '0.5em' }}>
+            <Link
+              to={this.props.auth ? '/surveys' : '/'}
+              className="left brand-logo"
+              style={{ marginLeft: '0.5em' }}
+            >
               SurveyButler
-            </a>
-            <ul className="right">
-              <li>
-                <a>{this.renderContent()}</a>
-              </li>
-            </ul>
+            </Link>
+            <ul className="right">{this.renderNav()}</ul>
           </div>
         </div>
       </nav>

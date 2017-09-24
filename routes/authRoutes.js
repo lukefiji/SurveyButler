@@ -25,7 +25,7 @@ module.exports = app => {
   app.get('/api/logout', (req, res) => {
     // logout() is attatched automatically to request by passport
     req.logout();
-    res.send(req.user);
+    res.redirect('/');
   });
 
   // Test authentication
