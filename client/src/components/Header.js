@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import Payments from './Payments';
+
 class Header extends Component {
   renderNav() {
     // Set up auth cases
@@ -14,12 +16,19 @@ class Header extends Component {
             <a href="/auth/google">Login With Google</a>
           </li>
         );
+      // User is logged in
       default:
-        return (
-          <li>
+        // Returning arrays require keys
+        return [
+          <li key="payments">
+            <a>
+              <Payments />
+            </a>
+          </li>,
+          <li key="logout">
             <a href="/api/logout">Logout</a>
           </li>
-        );
+        ];
     }
   }
 
