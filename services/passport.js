@@ -2,7 +2,10 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 
-// User is model class
+// Use JS' built-in promises in mongoose
+mongoose.Promise = global.Promise;
+
+// User is a model class
 const User = mongoose.model('users');
 
 // Serialize user for setting cookie
