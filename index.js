@@ -4,6 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
+
 require('./models/User');
 require('./services/passport'); // Execute Passport config
 
@@ -11,6 +13,9 @@ require('./services/passport'); // Execute Passport config
 mongoose.connect(process.env.MONGODB_URI, { useMongoClient: true });
 
 const app = express();
+
+// Use body-parser to parse HTTP body as req.body into JSON
+app.use(bodyParser.json());
 
 // Configure cookie-session middleware
 app.use(
@@ -26,6 +31,7 @@ app.use(passport.session());
 
 // Apply auth routes to app by passing it in
 require('./routes/authRoutes')(app);
+require('./routes/billingRoutes')(app);
 
 // Dynamic port binding
 const PORT = process.env.PORT;
