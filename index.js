@@ -7,6 +7,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 
 require('./models/User');
+require('./models/Survey');
 require('./services/passport'); // Execute Passport config
 
 // Make a connection to MongoDB

@@ -27,8 +27,7 @@ passport.deserializeUser((id, done) => {
 
 // Configuring Passport strategies
 passport.use(
-  new GoogleStrategy(
-    {
+  new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       // Send them back to this route
@@ -37,9 +36,11 @@ passport.use(
       proxy: true
     },
     // User has come back to our server and exchanged code for profile
-    async (accessToken, refreshToken, profile, done) => {
+    async(accessToken, refreshToken, profile, done) => {
       // Check if user already exists - database queries return promises
-      const existingUser = await User.findOne({ googleId: profile.id });
+      const existingUser = await User.findOne({
+        googleId: profile.id
+      });
 
       if (existingUser) {
         // We already have a record with the given profile ID
@@ -48,10 +49,12 @@ passport.use(
       }
 
       /** 
-      * If a record doesn't exist, create new record/model instance of user.
-      * save() saves it to the database
-      */
-      const user = await new User({ googleId: profile.id }).save();
+       * If a record doesn't exist, create new record/model instance of user.
+       * save() saves it to the database
+       */
+      const user = await new User({
+        googleId: profile.id
+      }).save();
       // Receive back saved instance from db
       done(null, user);
     }
