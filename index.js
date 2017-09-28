@@ -33,6 +33,7 @@ app.use(passport.session());
 // Apply auth routes to app by passing it in
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 // If deployment evironment is production
 if (process.env.NODE_ENV === 'production') {
