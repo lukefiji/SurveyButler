@@ -9,6 +9,10 @@ import reducers from './reducers';
 
 import 'materialize-css/dist/css/materialize.min.css';
 
+// Testing backend route
+import axios from 'axios';
+window.axios = axios;
+
 // Import Redux dev tools
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // All reducers, initial state, middleware

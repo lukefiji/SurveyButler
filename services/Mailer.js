@@ -1,4 +1,4 @@
-const sendgrid = reqiuire('sendgrid');
+const sendgrid = require('sendgrid');
 const helper = sendgrid.mail;
 
 /** Mailer class */
@@ -24,7 +24,8 @@ class Mailer extends helper.Mail {
     this.addRecipients();
   }
 
-  /** Format addresses for SendGrid
+  /**
+   * Format addresses for SendGrid
    * @param {[object]} recipients - Recipients array 
    */
   formatAddresses(recipients) {
