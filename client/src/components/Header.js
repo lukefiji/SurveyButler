@@ -37,7 +37,7 @@ class Header extends Component {
 
   render() {
     return (
-      <nav>
+      <nav className="deep-purple">
         <div className="nav-wrapper">
           <div className="container">
             <Link
