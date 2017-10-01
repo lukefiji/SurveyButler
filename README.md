@@ -11,5 +11,6 @@ The app's stack consists of:
   - Passport.js
     - Google OAuth
 - SendGrid (Email Service Provider)
+  - Email Click Tracking (For Surveys)
 - Stripe Payments
 - MongoDB
