@@ -47,7 +47,7 @@ function validate(values) {
   const errors = {};
 
   // Email validation errors
-  errors.emails = validateEmails(values.emails || '');
+  errors.recipients = validateEmails(values.recipients || '');
 
   // Validate each field for existence
   formFields.forEach(({ name }) => {

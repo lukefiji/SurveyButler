@@ -14,3 +14,15 @@ export const handleToken = token => async dispatch => {
   // User model is automatically updated upon successful db change
   dispatch({ type: FETCH_USER, payload: res.data });
 };
+
+// Submit survey to db
+export const submitSurvey = (values, history) => async dispatch => {
+  // Make a post request to API with values from redux form
+  const res = await axios.post('/api/surveys', values);
+
+  // Comes from withRouter() HOC from SurveyFormReview
+  history.push('/surveys');
+
+  // Update user model
+  dispatch({ type: FETCH_USER, payload: res.data });
+};
