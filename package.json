@@ -13,8 +13,11 @@
     "start": "node index",
     "server": "nodemon index",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" --names \"🏢 ,🖥 \"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "dev":
+      "concurrently \"npm run server\" \"npm run client\" \"npm run webhook\" --names \"🏢 ,🖥 ,🕸 \"",
+    "heroku-postbuild":
+      "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "webhook": "lt -p 5000 -s surveybutler"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
