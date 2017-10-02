@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import SurveyField from './SurveyField';
 import { Link } from 'react-router-dom';
+import validateEmails from '../../utils/validateEmails';
 
 // Creating objects for fields
 const FIELDS = [
@@ -50,6 +51,9 @@ class SurveyForm extends Component {
 function validate(values) {
   // Create errors object
   const errors = {};
+
+  // Email validation errors
+  errors.emails = validateEmails(values.emails || '');
 
   // Validate each field for existence
   FIELDS.forEach(({ name }) => {
