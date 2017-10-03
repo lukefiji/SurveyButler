@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const Path = require('path-parser');
+const { URL } = require('url');
 const mongoose = require('mongoose');
 const requireLogin = require('../middleware/requireLogin');
 const requireCredits = require('../middleware/requireCredits');
@@ -9,7 +12,34 @@ const Survey = mongoose.model('surveys');
 
 module.exports = app => {
   app.post('/api/surveys/webhooks', (req, res) => {
-    console.log(req.body);
+    // Extract variables out of path
+    const p = new Path('/api/surveys/:surveyId/:choice');
+
+    // Start functional chain to process events
+    const events = _.chain(req.body)
+      // Map over array of incoming events
+      .map(({ email, url }) => {
+        // Get only URL pathname (after http://domain/...)
+        // If Path.test() doesnt detect surveyId AND choice, it returns null
+        const match = p.test(new URL(url).pathname);
+        // Only return email, surveyId, and choice of events that match
+        if (match) {
+          return {
+            email,
+            surveyId: match.surveyId,
+            choice: match.choice
+          };
+        }
+      })
+      // Remove undefined events from array
+      .compact()
+      // Remove duplicate events of matching email AND surveyId
+      .uniqBy('email', 'surveyId')
+      // Returns value of processed array
+      .value();
+
+    console.log(events);
+
     res.send({});
   });
 
