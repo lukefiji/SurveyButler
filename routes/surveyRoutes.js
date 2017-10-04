@@ -11,12 +11,16 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys');
 
 module.exports = app => {
+  app.get('/api/surveys/:surveyId/:choice', (req, res) => {
+    res.redirect('/thanks');
+  });
+
   app.post('/api/surveys/webhooks', (req, res) => {
     // Extract variables out of path
     const p = new Path('/api/surveys/:surveyId/:choice');
 
     // Start functional chain to process events
-    const events = _.chain(req.body)
+    _.chain(req.body)
       // Map over array of incoming events
       .map(({ email, url }) => {
         // Get only URL pathname (after http://domain/...)
@@ -35,10 +39,28 @@ module.exports = app => {
       .compact()
       // Remove duplicate events of matching email AND surveyId
       .uniqBy('email', 'surveyId')
-      // Returns value of processed array
+      // Map over each event
+      .each(({ surveyId, email, choice }) => {
+        // Find and update matching mongo document/subdocument
+        Survey.updateOne(
+          {
+            _id: surveyId,
+            recipients: {
+              // Find a subdocument that matches this query
+              $elemMatch: { email: email, responded: false }
+            }
+          },
+          {
+            // Increment choice by 1
+            $inc: { [choice]: 1 },
+            // $ - find the matching recipient in the
+            // query above and set responded to true
+            $set: { 'recipients.$.responded': true },
+            lastResponded: new Date()
+          }
+        ).exec(); // Execute the query
+      })
       .value();
-
-    console.log(events);
 
     res.send({});
   });
