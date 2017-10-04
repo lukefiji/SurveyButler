@@ -11,6 +11,16 @@ const surveyTemplate = require('../services/emailTemplates/surveyTemplate');
 const Survey = mongoose.model('surveys');
 
 module.exports = app => {
+  app.get('/api/surveys', requireLogin, async (req, res) => {
+    // Query for surveys created by current user
+    const surveys = await Survey.find({ _user: req.user.id })
+      // Include or exclude fields - a query "projection"
+      // - Exclude recipients
+      .select({ recipients: false });
+
+    res.send(surveys);
+  });
+
   app.get('/api/surveys/:surveyId/:choice', (req, res) => {
     res.redirect('/thanks');
   });

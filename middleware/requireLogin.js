@@ -3,7 +3,7 @@ module.exports = (req, res, next) => {
     // Send unauthorized status
     return res
       .status(401) // Forbidden
-      .send({ error: 'You must be logged in to purchace credits.' });
+      .send({ error: 'You must be logged in to do this.' });
   }
 
   // If user cookie exists
