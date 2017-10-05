@@ -1,8 +1,9 @@
 # SurveyButler
 A full-stack (MERN) survey management SaaS app.
 
-The app's stack consists of:
+[View SurveyButler](https://surveybutler.herokuapp.com/)
 
+The app's stack includes:
 - React + Redux
   - React Router
   - Redux Thunk
